@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Latest SpaceX Launch</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #0b0c10;
+        color: #ffffff;
+        margin: 0;
+        padding: 2rem;
+      }
+      .container {
+        max-width: 600px;
+        margin: auto;
+        background: #1f2833;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 0 10px #45a29e;
+      }
+      h1,
+      h2 {
+        color: #66fcf1;
+      }
+      .details {
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🚀 Latest SpaceX Launch</h1>
+      {% if launch %}
+      <h2>{{ launch.name }}</h2>
+      <p><strong>Launch Date (UTC):</strong> {{ launch.date_utc }}</p>
+      <div class="details">
+        {% if launch.details %}
+        <p>{{ launch.details }}</p>
+        {% else %}
+        <p>
+          No details available. You can check the launch details on
+          <a href="{{ launch.links['wikipedia'] }}" target="_blank"
+            >Wikipedia</a
+          >
+          or watch the
+          <a href="{{ launch.links['webcast'] }}" target="_blank">webcast</a>.
+        </p>
+        {% endif %}
+      </div>
+      {% else %}
+      <p>Unable to retrieve launch data.</p>
+      {% endif %}
+    </div>
+  </body>
+</html>
