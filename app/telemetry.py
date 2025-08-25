@@ -15,7 +15,7 @@ The Falcon 9 rocket delivered supplies and science experiments to the ISS.
 
 
 def summarize_telemetry(details_text):
-    """Generate a brief summary of launch details using Hugging Face pipeline."""
+    """Generate a brief summary of launch details using HF pipeline."""
     if not details_text or details_text.strip() == "":
         details_text = DUMMY_DETAILS
 
