@@ -39,7 +39,7 @@ jobs:
       # 7️⃣ Test Docker container
       - name: Test Docker container
         run: |
-          docker run --rm -d -p 5050:5000 spacex-telemetry-dashboard
+          docker run --rm -d -p 5000:5000 spacex-telemetry-dashboard
           sleep 5
           curl -f http://localhost:5000 || exit 1
 
