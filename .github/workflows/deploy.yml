@@ -37,20 +37,20 @@ jobs:
         run: docker build -t spacex-telemetry-dashboard .
 
       # 7️⃣ Test Docker container
-      - name: Test Docker container
-        run: |
-          docker run --rm -d -p 5000:5000 spacex-telemetry-dashboard
-          sleep 5
-          curl -f http://localhost:5000 || exit 1
+    - name: Test Docker container
+    run: |
+        # Run container in background
+        CONTAINER_ID=$(docker run -d -p 5000:5000 spacex-telemetry-dashboard)
+        echo "Started container $CONTAINER_ID"
 
-  # Optional: Deploy to Render (uncomment to activate)
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   needs: build-and-test
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Deploy to Render
-  #       uses: render-examples/deploy-flask@v1
-  #       with:
-  #         api_key: ${{ secrets.RENDER_API_KEY }}
-  #         service_id: ${{ secrets.RENDER_SERVICE_ID }}
+        # Wait up to 15 seconds for Flask to start
+        sleep 10
+
+        # Show logs for debugging
+        docker logs $CONTAINER_ID
+
+        # Test the app is reachable
+        curl -f http://localhost:5000 || (docker logs $CONTAINER_ID && exit 1)
+
+        # Stop the container
+        docker stop $CONTAINER_ID
